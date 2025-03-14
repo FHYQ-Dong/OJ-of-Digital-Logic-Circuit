@@ -66,8 +66,6 @@ class MDVParser(mistletoe.markdown_renderer.MarkdownRenderer, requests.Session):
         v += f' * level: {problem_data["level"]}\n'
         v += f' * tags: {problem_data["tags"]}\n'
         v += f' * points: {problem_data["points"]}\n'
-        v += f' * answer_id: {problem_data["answer_id"]}\n'
-        v += f' * answer_file_id: {problem_data["answer_file_id"]}\n'
         v += f' */\n\n'
         v += problem_data["answer"]
         with open((dest / 'answer.v').as_posix(), 'w', encoding='utf-8') as f:
@@ -139,10 +137,10 @@ class VerilogOJCrawler(requests.Session):
             return False
 
     
-    def get_all(self, dest='problems', workers=1):
+    def get_all(self, dest='problems', workers=1, ignore_crawled=False):
         dest = Path(dest)
         os.makedirs(dest.as_posix(), exist_ok=True)
-        if not os.path.exists((dest / 'crawled.json').as_posix()):
+        if not os.path.exists((dest / 'crawled.json').as_posix()) or ignore_crawled:
             with open((dest / 'crawled.json').as_posix(), 'w', encoding='utf-8') as f:
                 f.write(json.dumps({
                     'crawled_problems': [],
@@ -294,6 +292,7 @@ if __name__ == '__main__':
     parser.add_argument('--get_answer', '-a', action='store_true', help='whether to get the answer of the problems (default: False)', default=False)
     parser.add_argument('--username', '-u', type=str, required=False, help='the username of the OJ (needed if `get_answer` is True)', default=None)
     parser.add_argument('--password', '-p', type=str, required=False, help='the password of the OJ (needed if `get_answer` is True)', default=None)
+    parser.add_argument('--ignore_crawled', '-i', action='store_true', help='whether to ignore the crawled problems and answers (default: False)', default=False)
     try:
         args = parser.parse_args()
     except:
@@ -311,4 +310,4 @@ if __name__ == '__main__':
         password=args.password, 
         log_file=args.log
     )
-    problems, answers = crawler.get_all(args.dest, args.workers)
+    problems, answers = crawler.get_all(args.dest, args.workers, args.ignore_crawled)

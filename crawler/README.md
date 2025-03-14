@@ -24,4 +24,4 @@ python crawler/verilog_oj_crawler.py --url <url_to_oj> -d . -a -u <your_oj_usern
 
 3. You will find some folders under the parent directory of `crawler/` (can be changed through argument `--dest`/`-d`). Each folder contains one problem.
 
-4. If you want to re-crawl the problems, remove `crawled.json` under the parent directory of `crawler/` (the directory specified through `--dest`/`-d`).
+4. If you want to re-crawl the problems, remove `crawled.json` under the parent directory of `crawler/` (the directory specified through `--dest`/`-d`), or you can simply pass `--ignore_crawled` argument to the script.
