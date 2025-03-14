@@ -1,2 +1,5 @@
 crawled.json
+
+# MacOS
 .DS_Store
+__MACOSX/
