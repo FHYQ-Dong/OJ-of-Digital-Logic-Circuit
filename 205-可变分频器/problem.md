@@ -19,7 +19,7 @@ points: 1
 ## 输入格式
 - `clk`: 1bit
 - `reset`: 1bit
-- `div[4:0]`: 4bit
+- `div[4:0]`: 5bit
 
 ## 输出格式
 - `out`: 1bit
